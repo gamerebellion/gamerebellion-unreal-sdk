@@ -83,7 +83,7 @@ using the project's saved directory — no action needed.
 The plugin transmits nothing until consent is granted where your jurisdiction
 requires it — call `SetConsent(true)` once the user's choice is known. Obtaining
 consent is your responsibility as the integrating developer; see the
-[LICENSE](../LICENSE) and
+[LICENSE](../LICENSE.md) and
 [Privacy Policy](https://gamerebellion.com/privacy-policy).
 
 ## Engine versions
