@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    GameRebellion Android plugin (Unreal Plugin Language).
+
+    Packages the self-contained NativeAOT library
+    ThirdParty/GameRebellionCore/Android/arm64-v8a/GameRebellion.Core.so into the
+    APK's lib/arm64-v8a/ directory so the runtime loader (FGameRebellionNativeLibrary,
+    which dlopen()s "GameRebellion.Core.so" by name) can find it on device.
+
+    A RuntimeDependencies.Add() in Build.cs is NOT sufficient on Android - only
+    native libs copied into $S(BuildDir)/libs/<abi>/ via the UPL get bundled into
+    the APK (same pattern the engine uses for libphonon.so, heapprofd, etc.).
+
+    NOTE: UPL files MUST use <root> as the document element (NOT <androidPlugin>).
+
+    The library depends only on Android system libs (libdl/liblog/libm/libc) and
+    gathers device info from Unreal via gr_set_device_info, so it needs no JNI
+    adapter AAR (that is a Unity-only component). It does, however, need OpenSSL
+    (libssl.so/libcrypto.so) for HTTPS - see below.
+-->
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Copy the prebuilt NativeAOT .so into the APK's arm64-v8a lib folder. -->
+    <resourceCopies>
+        <!-- $S(PluginDir) is the module dir (Source/GameRebellion); the ThirdParty
+             folder lives at the plugin root, two levels up (matches Build.cs). -->
+        <!-- OpenSSL for the .NET NativeAOT crypto shim. On linux-bionic, .NET's
+             OpenSsl interop dlopen()s "libssl.so" (which NEEDs "libcrypto.so") at
+             the first TLS handshake; Android has no loadable public OpenSSL, so
+             without these the process abort()s on the first HTTPS request. These
+             are built unversioned by scripts/build-unreal-aot-docker.sh. -->
+        <copyFile src="$S(PluginDir)/../../ThirdParty/GameRebellionCore/Android/arm64-v8a/libcrypto.so"
+                  dst="$S(BuildDir)/libs/arm64-v8a/libcrypto.so" />
+        <copyFile src="$S(PluginDir)/../../ThirdParty/GameRebellionCore/Android/arm64-v8a/libssl.so"
+                  dst="$S(BuildDir)/libs/arm64-v8a/libssl.so" />
+        <copyFile src="$S(PluginDir)/../../ThirdParty/GameRebellionCore/Android/arm64-v8a/GameRebellion.Core.so"
+                  dst="$S(BuildDir)/libs/arm64-v8a/GameRebellion.Core.so" />
+        <log text="GameRebellion: copied GameRebellion.Core.so + libssl.so + libcrypto.so into libs/arm64-v8a" />
+    </resourceCopies>
+</root>

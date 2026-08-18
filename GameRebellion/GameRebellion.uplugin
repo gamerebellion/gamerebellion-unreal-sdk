@@ -1,0 +1,31 @@
+{
+	"FileVersion": 3,
+	"Version": 100000,
+	"VersionName": "1.0.0",
+	"FriendlyName": "GameRebellion Analytics SDK",
+	"Description": "Cross-platform analytics SDK for game telemetry, session tracking, and event reporting.",
+	"Category": "Analytics",
+	"CreatedBy": "GameRebellion",
+	"CreatedByURL": "https://gamerebellion.com",
+	"DocsURL": "https://docs.gamerebellion.com/",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/gamerebellion/gamerebellion-unreal-sdk/issues",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "GameRebellion",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Linux",
+				"Mac",
+				"Android",
+				"IOS"
+			]
+		}
+	]
+}

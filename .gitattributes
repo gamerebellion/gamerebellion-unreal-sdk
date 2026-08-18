@@ -1,0 +1,6 @@
+* -text
+*.a     -filter -diff -merge
+*.o     -filter -diff -merge
+*.so    -filter -diff -merge
+*.dll   -filter -diff -merge
+*.dylib -filter -diff -merge
